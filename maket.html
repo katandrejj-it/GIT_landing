@@ -881,6 +881,7 @@
 
       /* ── UTP central 3D card ────────────────────────────────── */
       #utp-central-card {
+        width: 100%;
         border-radius: 40px;
         overflow: hidden;
         position: relative;
@@ -1528,37 +1529,22 @@
     <!-- ═══════════════════════════════════════════════ -->
     <!--  UTP — 3D CARD + 6 FEATURES                    -->
     <!-- ═══════════════════════════════════════════════ -->
-    <section id="utp" class="section-pad">
-      <div class="container">
-        <!-- Section label — НЕ ТРОГАТЬ -->
-        <div
-          class="flex items-center gap-3 mb-12 reveal"
-          style="
-            translate: none;
-            rotate: none;
-            scale: none;
-            transform: translate(0px, 0px);
-            opacity: 1;
-          "
-        >
-          <span
-            class="h-px flex-1"
-            style="background: var(--border); max-width: 60px"
-          ></span>
-          <span
-            class="text-xs tracking-widest uppercase"
+    <section id="utp" class="py-24 relative overflow-hidden">
+      <div class="container mx-auto px-4 md:px-8">
+        <!-- Section label -->
+        <div class="text-center mb-16 px-4">
+          <h2 class="text-4xl md:text-5xl font-bold mb-4">Почему мы лучше</h2>
+          <div
+            class="w-20 h-1 bg-gold mx-auto rounded-full"
             style="
-              color: var(--gold);
-              font-family: &quot;Jost&quot;, sans-serif;
-              letter-spacing: 0.2em;
+              background: linear-gradient(135deg, #d4b483, #b89a6a, #8b7049);
             "
-            >Наши преимущества</span
-          >
+          ></div>
         </div>
 
         <!-- 12-col grid: 3 + 6 + 3 -->
         <div
-          class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto"
+          class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto align-middle"
         >
           <!-- Left cards -->
           <div

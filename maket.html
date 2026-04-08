@@ -832,7 +832,7 @@
         -webkit-backdrop-filter: blur(14px);
         border: 1px solid rgba(184, 154, 106, 0.18);
         border-radius: 24px;
-        padding: 24px;
+        padding: 16px;
         transition:
           transform 0.3s ease,
           box-shadow 0.3s ease,
@@ -893,6 +893,11 @@
         box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
         transition: transform 0.2s ease-out;
         will-change: transform;
+      }
+      @media (min-width: 768px) {
+        #utp-central-card {
+          aspect-ratio: 3/4;
+        }
       }
       #utp-central-card .card-bg {
         position: absolute;
@@ -1557,7 +1562,7 @@
         >
           <!-- Left cards -->
           <div
-            class="lg:col-span-3 flex flex-col gap-5 utp-items-left order-2 lg:order-1"
+            class="lg:col-span-3 flex flex-col gap-6 utp-items-left order-2 lg:order-1"
           >
             <div class="utp-side-card">
               <div class="utp-icon-wrap">
@@ -1655,7 +1660,7 @@
 
           <!-- Central 3D card -->
           <div
-            class="lg:col-span-6 relative z-10 my-8 lg:my-0 order-1 lg:order-2"
+            class="lg:col-span-6 relative z-10 my-10 lg:my-0 order-1 lg:order-2"
             style="perspective: 1000px"
           >
             <div id="utp-central-card">
@@ -1717,7 +1722,7 @@
 
           <!-- Right cards -->
           <div
-            class="lg:col-span-3 flex flex-col gap-5 utp-items-right order-3"
+            class="lg:col-span-3 flex flex-col gap-6 utp-items-right order-3"
           >
             <div class="utp-side-card">
               <div class="utp-icon-wrap">

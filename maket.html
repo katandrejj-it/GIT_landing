@@ -1532,14 +1532,29 @@
     <section id="utp" class="py-24 relative overflow-hidden">
       <div class="container mx-auto px-4 md:px-8">
         <!-- Section label -->
-        <div class="text-center mb-16 px-4">
-          <h2 class="text-4xl md:text-5xl font-bold mb-4">Почему мы лучше</h2>
-          <div
-            class="w-20 h-1 bg-gold mx-auto rounded-full"
+        <div
+          class="flex items-center gap-3 mb-12 reveal"
+          style="
+            translate: none;
+            rotate: none;
+            scale: none;
+            transform: translate(0px, 0px);
+            opacity: 1;
+          "
+        >
+          <span
+            class="h-px flex-1"
+            style="background: var(--border); max-width: 60px"
+          ></span>
+          <span
+            class="text-xs tracking-widest uppercase"
             style="
-              background: linear-gradient(135deg, #d4b483, #b89a6a, #8b7049);
+              color: var(--gold);
+              font-family: &quot;Jost&quot;, sans-serif;
+              letter-spacing: 0.2em;
             "
-          ></div>
+            >Наши преимущества</span
+          >
         </div>
 
         <!-- 12-col grid: 3 + 6 + 3 -->
@@ -1650,7 +1665,7 @@
           >
             <div
               id="utp-central-card"
-              class="relative w-full aspect-[4/5] md:aspect-[3/4] rounded-[40px] overflow-hidden shadow-2xl transition-transform duration-200 ease-out flex flex-col justify-end p-8 bg-black"
+              class="relative w-full h-full rounded-[40px] overflow-hidden shadow-2xl transition-transform duration-200 ease-out flex flex-col justify-end p-8 bg-black"
             >
               <div class="card-bg"></div>
               <div class="card-gradient"></div>

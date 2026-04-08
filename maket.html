@@ -1646,10 +1646,12 @@
 
           <!-- Central 3D card -->
           <div
-            class="lg:col-span-6 relative z-10 my-10 lg:my-0 order-1 lg:order-2"
-            style="perspective: 1000px"
+            class="lg:col-span-6 relative perspective-1000 z-10 my-10 lg:my-0 order-1 lg:order-2"
           >
-            <div id="utp-central-card">
+            <div
+              id="utp-central-card"
+              class="relative w-full aspect-[4/5] md:aspect-[3/4] rounded-[40px] overflow-hidden shadow-2xl transition-transform duration-200 ease-out flex flex-col justify-end p-8 bg-black"
+            >
               <div class="card-bg"></div>
               <div class="card-gradient"></div>
               <div class="card-content">

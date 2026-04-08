@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# node
+node_modules/
+
+# logs
+*.log
+
+# temporary
+tmp/
+temp/
+
+# editor
+.vscode/
+
+# system
+Thumbs.db

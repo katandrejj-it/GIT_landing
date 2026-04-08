@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Премиальный Ремонт Квартир | Ремонт квартир под ключ</title>
+    <meta name="description" content="Роскошный сервис по ремонту квартир. Гарантия, сроки, премиум-материалы.">
+
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/imask"></script>
+    <!-- Use Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config & Custom Styles -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            400: '#a78bfa',
+                            500: '#8b5cf6', // Violet
+                            600: '#7c3aed',
+                            900: '#4c1d95',
+                        },
+                        dark: {
+                            bg: '#050505',
+                            card: '#121212',
+                            border: '#2A2A2A'
+                        },
+                        light: {
+                            bg: '#FAFAFA',
+                            card: '#FFFFFF',
+                            border: '#EAEAEA'
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 8s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth Scroll Setup */
+        html.lenis,
+        html.lenis body {
+            height: auto;
+            width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        body {
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass {
+            background: rgba(18, 18, 18, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .light .glass {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #444;
+        }
+
+        /* Typography Gradients */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #8b5cf6, #3b82f6);
+        }
+
+        /* Modals */
+        .modal-open {
+            overflow: hidden;
+        }
+
+        .modal {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Swiper Fixes */
+        .swiper-slide {
+            height: auto;
+        }
+
+        /* Hover micro-interactions */
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body class="bg-light-bg text-gray-900 dark:bg-dark-bg dark:text-gray-100 transition-colors duration-500">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="glass rounded-[20px] px-6 py-3 flex items-center justify-between shadow-lg">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 group cursor-pointer">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-blue-500 flex items-center justify-center text-white font-bold text-xl group-hover:rotate-12 transition-transform">
+                        R
+                    </div>
+                    <span class="font-bold text-xl tracking-tight hidden sm:block">Renova</span>
+                </div>
+
+                <!-- Nav -->
+                <nav class="hidden lg:flex items-center gap-2 bg-gray-100/50 dark:bg-dark-card/50 p-1 rounded-2xl">
+                    <a href="#hero"
+                        class="px-5 py-2 text-sm font-medium rounded-xl hover:bg-white dark:hover:bg-gray-800 transition-all">Главная</a>
+                    <a href="#usp"
+                        class="px-5 py-2 text-sm font-medium rounded-xl hover:bg-white dark:hover:bg-gray-800 transition-all">Преимущества</a>
+                    <a href="#portfolio"
+                        class="px-5 py-2 text-sm font-medium rounded-xl hover:bg-white dark:hover:bg-gray-800 transition-all">Кейсы</a>
+                    <a href="#pricing"
+                        class="px-5 py-2 text-sm font-medium rounded-xl hover:bg-white dark:hover:bg-gray-800 transition-all">Услуги</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex items-center gap-3 mr-4">
+                        <a href="tel:+79990000000"
+                            class="font-semibold text-sm hover:text-brand-500 transition-colors">+7 (999) 000-00-00</a>
+                        <div class="flex gap-2">
+                            <a href="#"
+                                class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center hover:scale-110 transition-transform"><i
+                                    class="ph ph-telegram-logo text-lg"></i></a>
+                            <a href="#"
+                                class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center hover:scale-110 transition-transform"><i
+                                    class="ph ph-whatsapp-logo text-lg"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Theme Switcher -->
+                    <button id="theme-toggle"
+                        class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors focus:outline-none">
+                        <i id="theme-icon-light" class="ph ph-sun text-xl text-yellow-500 hidden dark:block"></i>
+                        <i id="theme-icon-dark" class="ph ph-moon text-xl text-brand-900 block dark:hidden"></i>
+                    </button>
+
+                    <!-- Mobile Menu Btn -->
+                    <button
+                        class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                        <i class="ph ph-list text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero"
+        class="relative w-full h-[100vh] min-h-[600px] flex items-center justify-center overflow-hidden pt-20">
+        <!-- Swiper Background -->
+        <div class="absolute inset-0 z-0 select-none">
+            <div class="swiper hero-swiper w-full h-full">
+                <div class="swiper-wrapper">
+                    <!-- Slides loaded via JS to save HTML lines -->
+                </div>
+            </div>
+            <div class="absolute inset-0 bg-white/30 dark:bg-black/60 z-10 transition-colors duration-500"></div>
+            <!-- Gradient Overlay -->
+            <div
+                class="absolute inset-0 bg-gradient-to-t from-light-bg via-transparent to-transparent z-10 dark:from-dark-bg">
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-4 relative z-20 flex flex-col items-center justify-center text-center mt-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6 fade-up">
+                <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                <span class="text-sm font-medium">Премиальный ремонт в Москве</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 max-w-5xl leading-tight fade-up"
+                style="transform: translateY(30px); opacity: 0;">
+                Создаем интерьеры <br>
+                <span class="text-gradient">вашей мечты</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-10 max-w-2xl fade-up"
+                style="transform: translateY(30px); opacity: 0;">
+                Выполняем элитный ремонт квартир и домов под ключ. Точное соблюдение сроков, прозрачная смета и
+                авторский надзор.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 fade-up"
+                style="transform: translateY(30px); opacity: 0;">
+                <a href="#contact"
+                    class="px-8 py-4 rounded-full bg-gradient-to-r from-brand-600 to-blue-600 hover:opacity-90 text-white font-medium text-lg transition-all shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] w-full sm:w-auto hover-lift">
+                    Получить предварительную смету
+                </a>
+                <a href="#portfolio"
+                    class="px-8 py-4 rounded-full bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border hover:border-brand-500 transition-colors font-medium text-lg w-full sm:w-auto flex items-center justify-center gap-2 hover-lift">
+                    Посмотреть кейсы <i class="ph ph-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Decoration arrows -->
+        <div
+            class="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 z-20 hidden md:block group cursor-pointer hero-prev">
+            <div
+                class="w-14 h-14 rounded-full glass flex items-center justify-center group-hover:bg-white dark:group-hover:bg-dark-card transition-all">
+                <i class="ph ph-caret-left text-2xl"></i>
+            </div>
+        </div>
+        <div
+            class="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 z-20 hidden md:block group cursor-pointer hero-next">
+            <div
+                class="w-14 h-14 rounded-full glass flex items-center justify-center group-hover:bg-white dark:group-hover:bg-dark-card transition-all">
+                <i class="ph ph-caret-right text-2xl"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- USP Section (3D effect) -->
+    <section id="usp" class="py-24 relative overflow-hidden">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-16 px-4">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Почему мы лучше</h2>
+                <div class="w-20 h-1 bg-brand-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto align-middle">
+                <!-- Left Items -->
+                <div class="lg:col-span-3 flex flex-col gap-6 usp-items-left">
+                    <!-- Injected via JS -->
+                </div>
+
+                <!-- Central Card -->
+                <div class="lg:col-span-6 relative perspective-1000 z-10 my-10 lg:my-0">
+                    <div id="usp-central-card"
+                        class="relative w-full aspect-[4/5] md:aspect-[3/4] rounded-[40px] overflow-hidden shadow-2xl transition-transform duration-200 ease-out flex flex-col justify-end p-8 bg-black">
+                        <!-- BG Image with gradient -->
+                        <div
+                            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1470&auto=format&fit=crop')] bg-cover bg-center opacity-60">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-900/90 via-black/40 to-transparent">
+                        </div>
+
+                        <!-- Content -->
+                        <div class="relative z-10 text-white transform-style-3d text-center">
+                            <div
+                                class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center mx-auto mb-6">
+                                <i class="ph-fill ph-shield-check text-3xl"></i>
+                            </div>
+                            <h3 class="text-3xl md:text-4xl font-bold mb-4">Гарантия на работы до 3 лет</h3>
+                            <p class="text-white/80 mb-6">Мы уверены в качестве материалов и квалификации мастеров.</p>
+                            <div
+                                class="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/20">
+                                <div
+                                    class="w-6 h-6 rounded-full bg-brand-500 flex items-center justify-center text-xs font-bold">
+                                    R</div>
+                                <span class="font-medium tracking-wider uppercase text-sm">Renova Group</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Items -->
+                <div class="lg:col-span-3 flex flex-col gap-6 usp-items-right">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us & Map -->
+    <section class="py-24 bg-gray-50 dark:bg-dark-card/30 relative">
+        <div class="container mx-auto px-4 md:px-8 max-w-7xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Grid -->
+                <div>
+                    <h2 class="text-4xl font-bold mb-10">Комплексный подход</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" id="features-grid">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Right Map Preview -->
+                <div class="relative w-full aspect-square md:aspect-auto md:h-full min-h-[400px] rounded-full sm:rounded-[60px] overflow-hidden cursor-pointer group shadow-xl"
+                    onclick="openMapModal()">
+                    <div
+                        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1474&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-700 group-hover:scale-110 blur-[2px] group-hover:blur-0">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-brand-900/40 mix-blend-multiply transition-colors group-hover:bg-brand-900/20">
+                    </div>
+                    <div
+                        class="absolute inset-0 flex items-center justify-center flex-col text-white z-10 transition-transform group-hover:-translate-y-2">
+                        <div
+                            class="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-4 border border-white/30 shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                            <i class="ph-fill ph-map-pin text-4xl text-brand-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Карта объектов МСК</h3>
+                        <p class="mt-2 text-white/80">Нажмите для просмотра</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-24 relative">
+        <div class="container mx-auto px-4 md:px-8 max-w-7xl">
+            <div
+                class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-gray-200 dark:border-dark-border pb-6">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Наши работы</h2>
+                    <p class="text-gray-500 dark:text-gray-400 max-w-md">Каждый проект уникален. Изучите наши реалии.
+                    </p>
+                </div>
+                <div class="mt-6 md:mt-0">
+                    <button
+                        class="px-6 py-3 rounded-full border border-gray-300 dark:border-gray-700 hover:border-brand-500 transition-colors flex items-center gap-2 font-medium">
+                        Все проекты <i class="ph ph-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing / Services Section -->
+    <section id="pricing" class="py-24 bg-gray-50 dark:bg-dark-card/30 relative">
+        <div class="container mx-auto px-4 md:px-8 max-w-7xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Услуги и тарифы</h2>
+                <div class="w-20 h-1 bg-brand-500 mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-500 dark:text-gray-400">Прозрачное ценообразование без скрытых платежей.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="pricing-grid">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 relative">
+        <div class="container mx-auto px-4 md:px-8 max-w-3xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Часто задаваемые вопросы</h2>
+            </div>
+            <div id="faq-container" class="flex flex-col gap-4">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="py-24 relative bg-gray-900 text-white overflow-hidden">
+        <div
+            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1541888087541-b37bb96f4ab4?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-20">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-900/90 to-dark-bg z-0"></div>
+
+        <div class="container mx-auto px-4 relative z-10 max-w-5xl">
+            <div
+                class="flex flex-col lg:flex-row gap-12 bg-white/10 backdrop-blur-xl p-8 md:p-12 rounded-[40px] border border-white/10 shadow-2xl">
+                <div class="lg:w-1/2 flex flex-col justify-center">
+                    <h2 class="text-4xl font-bold mb-4">Готовы начать ремонт?</h2>
+                    <p class="text-white/70 mb-8 text-lg">Оставьте заявку, и наш инженер-замерщик свяжется с вами для
+                        бесплатной консультации и расчета сметы.</p>
+
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-brand-500/20 flex items-center justify-center text-brand-300">
+                                <i class="ph-fill ph-check-circle"></i></div>
+                            <span>Точная смета за 24 часа</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-brand-500/20 flex items-center justify-center text-brand-300">
+                                <i class="ph-fill ph-check-circle"></i></div>
+                            <span>Бесплатный выезд на объект</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="lg:w-1/2">
+                    <form class="flex flex-col gap-4" id="contact-form">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="w-full">
+                                <label class="block text-sm text-white/70 mb-1 ml-2">Ваше имя</label>
+                                <input type="text" name="name" required
+                                    class="w-full bg-black/30 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-500 focus:bg-black/50 transition-colors"
+                                    placeholder="Иван Иванов">
+                            </div>
+                            <div class="w-full">
+                                <label class="block text-sm text-white/70 mb-1 ml-2">Телефон</label>
+                                <input type="tel" name="phone" id="phone-mask" required
+                                    class="w-full bg-black/30 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-500 focus:bg-black/50 transition-colors"
+                                    placeholder="+7 (___) ___-__-__">
+                            </div>
+                        </div>
+
+                        <div class="w-full mt-2">
+                            <label class="block text-sm text-white/70 mb-1 ml-2">Площадь объекта (м²)</label>
+                            <input type="number" name="area"
+                                class="w-full bg-black/30 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-500 focus:bg-black/50 transition-colors"
+                                placeholder="Например: 65">
+                        </div>
+
+                        <label class="flex items-start gap-3 mt-4 cursor-pointer group">
+                            <input type="checkbox" required
+                                class="mt-1 w-5 h-5 rounded accent-brand-500 border-white/20">
+                            <span class="text-sm text-white/60 group-hover:text-white/90 transition-colors">Я соглашаюсь
+                                с политикой обработки персональных данных.</span>
+                        </label>
+
+                        <button type="submit"
+                            class="mt-4 w-full bg-brand-600 hover:bg-brand-500 text-white font-bold text-lg py-5 rounded-2xl transition-all shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.6)] transform hover:-translate-y-1">
+                            Вызвать замерщика
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-[#0a0a0a] py-12 border-t border-gray-200 dark:border-dark-border">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Col 1 -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-white font-bold">
+                            R</div>
+                        <span class="font-bold text-xl tracking-tight">Renova Group</span>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 max-w-sm mb-6">Премиальный ремонт квартир под ключ в
+                        Москве и МО. Создаем комфорт и эстетику, которые служат десятилетиями.</p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border flex items-center justify-center hover:text-brand-500 transition-colors"><i
+                                class="ph ph-instagram-logo text-xl"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border flex items-center justify-center hover:text-brand-500 transition-colors"><i
+                                class="ph ph-telegram-logo text-xl"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border flex items-center justify-center hover:text-brand-500 transition-colors"><i
+                                class="ph ph-whatsapp-logo text-xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="font-bold mb-4 dark:text-white">Навигация</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="#hero" class="hover:text-brand-500 transition-colors">Главная</a></li>
+                        <li><a href="#usp" class="hover:text-brand-500 transition-colors">О нас</a></li>
+                        <li><a href="#portfolio" class="hover:text-brand-500 transition-colors">Кейсы</a></li>
+                        <li><a href="#pricing" class="hover:text-brand-500 transition-colors">Цены</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="font-bold mb-4 dark:text-white">Контакты</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li class="flex items-center gap-2"><i class="ph ph-map-pin text-brand-500"></i> Москва,
+                            Пресненская наб. 12</li>
+                        <li class="flex items-center gap-2"><i class="ph ph-phone text-brand-500"></i> +7 (999)
+                            000-00-00</li>
+                        <li class="flex items-center gap-2"><i class="ph ph-envelope  text-brand-500"></i>
+                            info@renova.ru</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-border flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                <p>&copy; 2024 Renova Group. Все права защищены.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Политика конфиденциальности</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- MODALS -->
+
+    <!-- Map Modal -->
+    <div id="map-modal"
+        class="modal fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div
+            class="bg-white dark:bg-dark-card w-full max-w-6xl h-[80vh] rounded-[30px] overflow-hidden relative shadow-2xl scale-95 transform transition-transform duration-300 flex flex-col">
+            <div
+                class="px-6 py-4 border-b border-gray-100 dark:border-dark-border flex justify-between items-center bg-white dark:bg-dark-card z-10">
+                <h3 class="text-xl font-bold">Наши объекты на карте Москвы</h3>
+                <button onclick="closeMapModal()"
+                    class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-red-100 hover:text-red-500 transition-colors">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <div class="flex-grow w-full h-full relative" id="map-container">
+                <!-- Iframe injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal -->
+    <div id="portfolio-modal"
+        class="modal fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
+        <div
+            class="bg-white dark:bg-dark-card w-full max-w-5xl rounded-[30px] overflow-hidden relative shadow-2xl scale-95 transform transition-transform duration-300 my-auto sm:my-8 flex flex-col lg:flex-row min-h-[60vh]">
+            <button onclick="closePortfolioModal()"
+                class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-black/50 text-white backdrop-blur-md flex items-center justify-center hover:bg-red-500 transition-colors">
+                <i class="ph ph-x"></i>
+            </button>
+
+            <div class="lg:w-1/2 bg-gray-100 dark:bg-black relative">
+                <div class="swiper modal-swiper w-full h-full aspect-square lg:aspect-auto">
+                    <div class="swiper-wrapper" id="modal-swiper-wrapper">
+                        <!-- Slides -->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+
+            <div class="lg:w-1/2 p-8 md:p-10 flex flex-col justify-center">
+                <div class="inline-block px-3 py-1 bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 rounded-full text-xs font-bold uppercase tracking-wider mb-4"
+                    id="pm-tag">Дизайн-проект</div>
+                <h3 class="text-3xl font-bold mb-2" id="pm-title">ЖК Сердце Столицы</h3>
+                <p class="text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-6"><i class="ph ph-map-pin"></i>
+                    <span id="pm-address">г. Москва, ул. Шелепиха</span></p>
+
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl">
+                        <span class="block text-xs text-gray-500 mb-1">Площадь</span>
+                        <span class="font-bold text-lg" id="pm-area">120 м²</span>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl">
+                        <span class="block text-xs text-gray-500 mb-1">Срок работ</span>
+                        <span class="font-bold text-lg" id="pm-time">4 месяца</span>
+                    </div>
+                </div>
+
+                <p class="text-gray-700 dark:text-gray-300 mb-8 leading-relaxed" id="pm-desc">
+                    Полный цикл работ от демонтажа до финальной расстановки мебели. Сложные инженерные узлы, теневые
+                    профили, система умный дом.
+                </p>
+
+                <a href="#" target="_blank"
+                    class="w-full block text-center px-6 py-4 rounded-xl border-2 border-brand-500 text-brand-600 dark:text-brand-400 font-bold hover:bg-brand-500 hover:text-white transition-all">
+                    Больше фото на Яндекс.Диск
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- APP LOGIC -->
+    <script>
+        // 1. Data Injection to keep HTML short
+
+        // Hero Slider Data
+        const heroSlides = [
+            "https://images.unsplash.com/photo-1600607688969-[...]?q=80&w=1470&auto=format&fit=crop", // placeholder base URL
+            "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?q=80&w=1470&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=1470&auto=format&fit=crop"
+        ];
+        document.querySelector('.hero-swiper .swiper-wrapper').innerHTML = [
+            "1600607688969-a5bfcd64fd28", "1600566753086-00f18fb6b3ea", "1600210492493-0946911123ea"
+        ].map(id => `
+            <div class="swiper-slide w-full h-full">
+                <img src="https://images.unsplash.com/photo-${id}?q=80&w=1920&auto=format&fit=crop" class="w-full h-full object-cover" alt="Interior">
+            </div>
+        `).join('');
+
+        // USP Items
+        const uspLeft = [
+            { icon: 'target', title: '01. Полный цикл', desc: 'От дизайн-проекта до финальной уборки' },
+            { icon: 'calendar', title: '02. Планирование', desc: 'Точный график работ без задержек' },
+            { icon: 'sparkle', title: '03. Чистота', desc: 'Ежедневная уборка на объекте' }
+        ];
+        const uspRight = [
+            { icon: 'arrows-out', title: '04. Гибкость', desc: 'Адаптация под любые изменения' },
+            { icon: 'medal', title: '05. Качество', desc: 'Материалы премиум сегмента' },
+            { icon: 'handshake', title: '06. Сопровождение', desc: 'Личный менеджер 24/7' }
+        ];
+
+        const renderUsp = (item, delay) => `
+            <div class="glass p-6 rounded-3xl relative overflow-hidden group">
+                <div class="w-12 h-12 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-brand-500 mb-4 group-hover:scale-110 transition-transform">
+                    <i class="ph ph-${item.icon} text-2xl"></i>
+                </div>
+                <h4 class="font-bold text-lg mb-2">${item.title}</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-400">${item.desc}</p>
+            </div>
+        `;
+        document.querySelector('.usp-items-left').innerHTML = uspLeft.map((i, idx) => renderUsp(i, idx)).join('');
+        document.querySelector('.usp-items-right').innerHTML = uspRight.map((i, idx) => renderUsp(i, idx)).join('');
+
+        // Features
+        const features = [
+            { t: 'Договор и смета', d: 'Фиксируем цену и сроки.' },
+            { t: 'Прораб на объекте', d: 'Постоянный контроль качества.' },
+            { t: 'Закупка материалов', d: 'Скидки от партнеров до 20%.' },
+            { t: 'Фото-отчеты', d: 'Еженедельно в мессенджер.' },
+        ];
+        document.getElementById('features-grid').innerHTML = features.map(f => `
+            <div class="p-6 bg-white dark:bg-dark-card rounded-3xl border border-gray-100 dark:border-dark-border hover-lift">
+                <div class="w-3 h-3 rounded-full bg-brand-500 mb-4"></div>
+                <h4 class="font-bold mb-2">${f.t}</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-400">${f.d}</p>
+            </div>
+        `).join('');
+
+        // Portfolio
+        const portfolios = [
+            { img: '1600607686527-6f88ce201fd8', name: 'ЖК Сердце Столицы', style: 'Неоклассика', area: '120м²' },
+            { img: '1600585154340-be6161a56a0c', name: 'ЖК Символ', style: 'Минимализм', area: '85м²' },
+            { img: '1598928506311-c55dd14d7a8d', name: 'ЖК Фили Сити', style: 'Лофт', area: '150м²' },
+            { img: '1600566753190-17382c448f80', name: 'ЖК Зиларт', style: 'Сканди', area: '65м²' },
+            { img: '1600585154562-b9e7b25055b8', name: 'ЖК PRIME PARK', style: 'Хай-тек', area: '210м²' },
+            { img: '1600573472591-ee6b8823528b', name: 'Загородный дом', style: 'Эко', area: '340м²' }
+        ];
+        document.getElementById('portfolio-grid').innerHTML = portfolios.map((p, i) => `
+            <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] cursor-pointer" onclick="openPortfolioModal(${i})">
+                <img src="https://images.unsplash.com/photo-${p.img}?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                <div class="absolute bottom-0 left-0 w-full p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-300 mb-2 block">${p.style} • ${p.area}</span>
+                    <h3 class="text-2xl font-bold">${p.name}</h3>
+                </div>
+            </div>
+        `).join('');
+
+        // Pricing
+        const pricing = [
+            { name: 'Косметический', price: 'от 7 000 ₽ / м²', color: 'gray', desc: ['Демонтаж покрытий', 'Выравнивание стен (шпатлевка)', 'Оклейка обоями', 'Укладка ламината/линолеума'] },
+            { name: 'Капитальный', price: 'от 15 000 ₽ / м²', color: 'brand', pop: true, desc: ['Перепланировка', 'Разводка электрики/сантехники', 'Идеальное выравнивание', 'Плиточные работы', 'Под ключ с материалами черновыми'] },
+            { name: 'Дизайнерский', price: 'от 25 000 ₽ / м²', color: 'gray', desc: ['Сложные потолки', 'Теневые плинтуса', 'Декоративная штукатурка', 'Умный дом', 'Авторский надзор'] }
+        ];
+        document.getElementById('pricing-grid').innerHTML = pricing.map(p => `
+            <div class="bg-white dark:bg-dark-card rounded-[40px] px-8 py-10 relative border border-gray-100 dark:border-dark-border ${p.pop ? 'transform scale-105 shadow-2xl z-10 border-brand-500/50' : 'hover-lift hover:shadow-xl'}">
+                ${p.pop ? '<div class="absolute top-0 left-1 /2 transform -translate-x-1/2 -translate-y-1/2 bg-brand-500 text-white text-xs font-bold uppercase py-1 px-4 rounded-full">Хит продаж</div>' : ''}
+                <h3 class="text-2xl font-bold mb-2">${p.name}</h3>
+                <div class="text-3xl font-black text-${p.pop ? 'brand-500' : 'gray-900 dark:text-white'} mb-6">${p.price}</div>
+                <div class="h-px w-full bg-gray-100 dark:bg-dark-border mb-6"></div>
+                
+                <ul class="space-y-4 mb-10 text-sm text-gray-600 dark:text-gray-300 h-48 overflow-y-auto pr-2 custom-scroll">
+                    ${p.desc.map(d => `<li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-brand-500 mt-0.5"></i> <span>${d}</span></li>`).join('')}
+                </ul>
+                
+                <a href="#contact" class="block text-center w-full py-4 rounded-2xl font-bold transition-all ${p.pop ? 'bg-brand-500 text-white hover:bg-brand-600 shadow-lg' : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'}">
+                    Заказать смету
+                </a>
+            </div>
+        `).join('');
+
+        // FAQ
+        const faqs = [
+            { q: 'Вы составляете договор и смету?', a: 'Да, обязательно. Смета фиксируется в договоре и не меняется без утверждения дополнительных работ заказчиком.' },
+            { q: 'Кто закупает материалы?', a: 'Мы берем на себя черновые материалы и предоставляем чеки. Чистовые Вы можете купить сами, либо доверить нам (у нас скидки).' },
+            { q: 'Можно ли жить в квартире во время ремонта?', a: 'При косметическом – в теории да, но при капитальном ремонте проживание невозможно в целях вашей безопасности и соблюдения технологий.' }
+        ];
+        document.getElementById('faq-container').innerHTML = faqs.map((f, i) => `
+            <div class="faq-item border-b border-gray-200 dark:border-dark-border overflow-hidden">
+                <button class="w-full text-left py-6 flex justify-between items-center focus:outline-none" onclick="toggleFaq(${i})">
+                    <span class="text-xl font-medium pr-8">${f.q}</span>
+                    <div class="min-w-10 min-h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center faq-icon transition-transform">
+                        <i class="ph ph-plus"></i>
+                    </div>
+                </button>
+                <div class="faq-content h-0 opacity-0 overflow-hidden transition-all duration-300">
+                    <p class="pb-6 text-gray-500 dark:text-gray-400 leading-relaxed">${f.a}</p>
+                </div>
+            </div>
+        `).join('');
+
+        window.toggleFaq = (index) => {
+            const items = document.querySelectorAll('.faq-item');
+            items.forEach((item, i) => {
+                const content = item.querySelector('.faq-content');
+                const icon = item.querySelector('.faq-icon');
+                if (i === index) {
+                    const isOpen = content.style.height !== '0px' && content.style.height !== '';
+                    content.style.height = isOpen ? '0px' : content.scrollHeight + 'px';
+                    content.style.opacity = isOpen ? '0' : '1';
+                    icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(45deg)';
+                } else {
+                    content.style.height = '0px';
+                    content.style.opacity = '0';
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        };
+
+
+        // 2. Initializations
+
+        // Theme Toggle
+        const html = document.documentElement;
+        const toggleBtn = document.getElementById('theme-toggle');
+        // Check local storage or preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+        });
+
+        // Lenis Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Header shrink
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('py-2', 'bg-light-bg/80', 'dark:bg-dark-bg/80', 'backdrop-blur-xl');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.remove('py-2', 'bg-light-bg/80', 'dark:bg-dark-bg/80', 'backdrop-blur-xl');
+                header.classList.add('py-4');
+            }
+        });
+
+        // Swiper
+        new Swiper('.hero-swiper', {
+            loop: true,
+            effect: 'fade',
+            autoplay: { delay: 5000, disableOnInteraction: false },
+            navigation: { nextEl: '.hero-next', prevEl: '.hero-prev' },
+            speed: 1000
+        });
+
+        const modalSwiper = new Swiper('.modal-swiper', {
+            loop: true,
+            pagination: { el: '.swiper-pagination', clickable: true },
+            speed: 600
+        });
+
+        // IMask
+        IMask(document.getElementById('phone-mask'), { mask: '+{7} (000) 000-00-00' });
+
+        // GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Fade Up Elements
+        gsap.utils.toArray('.fade-up').forEach((elem, i) => {
+            gsap.to(elem, {
+                scrollTrigger: { trigger: '#hero', start: 'top center' },
+                y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: i * 0.15
+            });
+        });
+
+        // Parallax 3D Card Map
+        const card = document.getElementById('usp-central-card');
+        card.parentElement.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -10;
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+        card.parentElement.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+
+        // Animate USP Items
+        gsap.fromTo('.usp-items-left .glass',
+            { x: -50, opacity: 0 },
+            { scrollTrigger: { trigger: '#usp', start: 'top 60%' }, x: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power2.out' }
+        );
+        gsap.fromTo('.usp-items-right .glass',
+            { x: 50, opacity: 0 },
+            { scrollTrigger: { trigger: '#usp', start: 'top 60%' }, x: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power2.out' }
+        );
+
+        // Map Modal
+        const mapModal = document.getElementById('map-modal');
+        const mapContainer = document.getElementById('map-container');
+        window.openMapModal = () => {
+            mapModal.classList.add('active');
+            html.classList.add('modal-open');
+            mapContainer.innerHTML = '<iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A7f6f1c4df19c0b117865910fae00787a27076f8ff5154316d9e0ce84b16d2e61&amp;source=constructor" width="100%" height="100%" frameborder="0"></iframe>';
+        };
+        window.closeMapModal = () => {
+            mapModal.classList.remove('active');
+            html.classList.remove('modal-open');
+            setTimeout(() => { mapContainer.innerHTML = ''; }, 300);
+        };
+
+        // Portfolio Modal
+        const portModal = document.getElementById('portfolio-modal');
+        window.openPortfolioModal = (index) => {
+            const p = portfolios[index];
+            document.getElementById('pm-title').innerText = p.name;
+            document.getElementById('pm-area').innerText = p.area;
+            document.getElementById('pm-tag').innerText = p.style;
+
+            // Just duplicate the single image for demo
+            document.getElementById('modal-swiper-wrapper').innerHTML = [1, 2, 3].map(i => `
+                <div class="swiper-slide w-full h-full">
+                    <img src="https://images.unsplash.com/photo-${p.img}?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover">
+                </div>
+            `).join('');
+
+            modalSwiper.update();
+            portModal.classList.add('active');
+            html.classList.add('modal-open');
+            lenis.stop();
+        };
+        window.closePortfolioModal = () => {
+            portModal.classList.remove('active');
+            html.classList.remove('modal-open');
+            lenis.start();
+        };
+
+        // Close modals on outside click
+        [mapModal, portModal].forEach(m => {
+            m.addEventListener('click', (e) => {
+                if (e.target === m) {
+                    closeMapModal();
+                    closePortfolioModal();
+                }
+            });
+        });
+
+        // Smooth scroll anchors integration with lenis
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                lenis.scrollTo(this.getAttribute('href'), { offset: -80 });
+            });
+        });
+
+    </script>
+</body>
+
+</html>

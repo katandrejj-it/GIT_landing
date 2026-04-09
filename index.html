@@ -385,12 +385,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transform: scale(1.08);
-        transition: transform 8s ease;
         will-change: transform;
-      }
-      .swiper-slide-active .hero-slide-img {
-        transform: scale(1);
       }
       .hero-overlay {
         position: absolute;
@@ -3870,17 +3865,15 @@
         },
       );
 
-      // Hero parallax (subtle)
-      window.addEventListener(
-        "scroll",
-        () => {
-          const scrollY = window.scrollY;
-          document.querySelectorAll(".parallax-hero").forEach((img) => {
-            img.style.transform = `scale(1) translateY(${scrollY * 0.18}px)`;
-          });
-        },
-        { passive: true },
-      );
+      // Hero zoom-out effect (always active, independent of scroll)
+      let heroZoomPhase = 0;
+      const heroZoomInterval = setInterval(() => {
+        heroZoomPhase += 0.008;
+        const scale = 1.08 + 0.025 * Math.sin(heroZoomPhase);
+        document.querySelectorAll(".parallax-hero").forEach((img) => {
+          img.style.transform = `scale(${scale.toFixed(4)})`;
+        });
+      }, 16);
 
       /* ─── FAQ accordion ─────────────────────────────── */
       document.querySelectorAll(".faq-item").forEach((item) => {

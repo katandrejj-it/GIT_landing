@@ -320,6 +320,24 @@
         color: var(--gold);
       }
 
+      /* ── Header adaptation for 1024px-1200px ─────────── */
+      @media (min-width: 1024px) and (max-width: 1279px) {
+        .nav-tab {
+          padding: 6px 10px;
+          font-size: 0.7rem;
+          letter-spacing: 0.03em;
+        }
+        nav.hidden.lg\:flex {
+          gap: 0.125rem;
+        }
+        a[href="tel:+74951234567"] span.hidden.lg\:inline {
+          font-size: 0.8rem;
+        }
+        .container {
+          padding: 0 20px;
+        }
+      }
+
       /* ── Theme Toggle ──────────────────────────────────── */
       .theme-toggle {
         width: 48px;

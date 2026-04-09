@@ -4378,14 +4378,34 @@
       let pricingSwiperInstance = null;
 
       function initPricingSwiper() {
-        if (window.innerWidth < 768 && !pricingSwiperInstance) {
+        const isMobile = window.innerWidth < 768;
+
+        if (isMobile) {
+          // Destroy existing instance if any
+          if (pricingSwiperInstance) {
+            pricingSwiperInstance.destroy(true, true);
+            pricingSwiperInstance = null;
+          }
+
+          // Check if element exists
+          const swiperEl = document.querySelector(".pricing-swiper .swiper");
+          if (!swiperEl) {
+            console.warn("Pricing Swiper element not found");
+            return;
+          }
+
+          // Don't double-init
+          if (swiperEl.classList.contains("swiper-initialized")) {
+            return;
+          }
+
           pricingSwiperInstance = new Swiper(".pricing-swiper .swiper", {
-            loop: true,
+            loop: false,
             speed: 600,
             slidesPerView: "auto",
             centeredSlides: true,
             spaceBetween: 16,
-            initialSlide: 1, // Standard (featured) active by default
+            initialSlide: 1,
             pagination: {
               el: ".pricing-swiper .swiper-pagination",
               clickable: true,
@@ -4393,20 +4413,27 @@
             grabCursor: true,
             slideToClickedSlide: true,
           });
-        } else if (window.innerWidth >= 768 && pricingSwiperInstance) {
+        } else if (pricingSwiperInstance) {
           pricingSwiperInstance.destroy(true, true);
           pricingSwiperInstance = null;
         }
       }
 
-      // Init on load
-      initPricingSwiper();
+      // Init on DOM ready
+      document.addEventListener("DOMContentLoaded", () => {
+        initPricingSwiper();
+      });
+
+      // Also try on window load (fallback)
+      window.addEventListener("load", () => {
+        initPricingSwiper();
+      });
 
       // Re-init on resize
       let pricingResizeTimer;
       window.addEventListener("resize", () => {
         clearTimeout(pricingResizeTimer);
-        pricingResizeTimer = setTimeout(initPricingSwiper, 150);
+        pricingResizeTimer = setTimeout(initPricingSwiper, 200);
       });
 
       /* ─── GSAP ScrollTrigger animations ─────────────── */

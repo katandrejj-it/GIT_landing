@@ -2366,6 +2366,7 @@
     <!-- ═══════════════════════════════════════════════ -->
     <section
       id="pricing"
+      style="overflow: hidden"
       class="section-pad"
       style="background: var(--surface)"
     >
@@ -4376,64 +4377,75 @@
 
       /* ─── Pricing Swiper (mobile only) ──────────────── */
       let pricingSwiperInstance = null;
+      let pricingSwiperReady = false;
 
-      function initPricingSwiper() {
-        const isMobile = window.innerWidth < 768;
+      function createPricingSwiper() {
+        const swiperEl = document.querySelector(".pricing-swiper .swiper");
+        if (!swiperEl || swiperEl.classList.contains("swiper-initialized"))
+          return;
 
-        if (isMobile) {
-          // Destroy existing instance if any
-          if (pricingSwiperInstance) {
-            pricingSwiperInstance.destroy(true, true);
-            pricingSwiperInstance = null;
-          }
+        pricingSwiperInstance = new Swiper(".pricing-swiper .swiper", {
+          loop: false,
+          speed: 600,
+          slidesPerView: "auto",
+          centeredSlides: true,
+          spaceBetween: 16,
+          initialSlide: 1,
+          pagination: {
+            el: ".pricing-swiper .swiper-pagination",
+            clickable: true,
+          },
+          grabCursor: true,
+          slideToClickedSlide: true,
+        });
+        pricingSwiperReady = true;
+      }
 
-          // Check if element exists
-          const swiperEl = document.querySelector(".pricing-swiper .swiper");
-          if (!swiperEl) {
-            console.warn("Pricing Swiper element not found");
-            return;
-          }
-
-          // Don't double-init
-          if (swiperEl.classList.contains("swiper-initialized")) {
-            return;
-          }
-
-          pricingSwiperInstance = new Swiper(".pricing-swiper .swiper", {
-            loop: false,
-            speed: 600,
-            slidesPerView: "auto",
-            centeredSlides: true,
-            spaceBetween: 16,
-            initialSlide: 1,
-            pagination: {
-              el: ".pricing-swiper .swiper-pagination",
-              clickable: true,
-            },
-            grabCursor: true,
-            slideToClickedSlide: true,
-          });
-        } else if (pricingSwiperInstance) {
+      function destroyPricingSwiper() {
+        if (pricingSwiperInstance) {
           pricingSwiperInstance.destroy(true, true);
           pricingSwiperInstance = null;
+          pricingSwiperReady = false;
         }
       }
 
-      // Init on DOM ready
-      document.addEventListener("DOMContentLoaded", () => {
-        initPricingSwiper();
-      });
+      // Use matchMedia for reliable breakpoint detection
+      const pricingMQL = window.matchMedia("(min-width: 768px)");
 
-      // Also try on window load (fallback)
-      window.addEventListener("load", () => {
-        initPricingSwiper();
-      });
+      function handlePricingBreakpoint(e) {
+        if (e.matches) {
+          // Desktop: destroy swiper
+          destroyPricingSwiper();
+        } else {
+          // Mobile: create swiper
+          if (!pricingSwiperReady) {
+            createPricingSwiper();
+          }
+        }
+      }
 
-      // Re-init on resize
+      // Listen for breakpoint changes
+      pricingMQL.addEventListener("change", handlePricingBreakpoint);
+
+      // Initial check
+      function initPricingOnReady() {
+        handlePricingBreakpoint(pricingMQL);
+      }
+
+      // Wait for everything to be ready
+      if (document.readyState === "complete") {
+        initPricingOnReady();
+      } else {
+        window.addEventListener("load", initPricingOnReady);
+      }
+
+      // Re-init on resize with debounce
       let pricingResizeTimer;
       window.addEventListener("resize", () => {
         clearTimeout(pricingResizeTimer);
-        pricingResizeTimer = setTimeout(initPricingSwiper, 200);
+        pricingResizeTimer = setTimeout(() => {
+          handlePricingBreakpoint(pricingMQL);
+        }, 250);
       });
 
       /* ─── GSAP ScrollTrigger animations ─────────────── */

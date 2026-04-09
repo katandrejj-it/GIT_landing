@@ -4298,15 +4298,23 @@
       const burger = document.getElementById("burger");
       const mobileMenu = document.getElementById("mobile-menu");
       const mobileClose = document.getElementById("mobile-close");
+      let isMenuOpen = false;
+
       burger.addEventListener("click", () => {
-        mobileMenu.classList.add("open");
-        document.body.style.overflow = "hidden";
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.add("open");
+          document.body.style.overflow = "hidden";
+        } else {
+          closeMobileMenu();
+        }
       });
       mobileClose.addEventListener("click", closeMobileMenu);
       document
         .querySelectorAll(".mobile-nav-link")
         .forEach((a) => a.addEventListener("click", closeMobileMenu));
       function closeMobileMenu() {
+        isMenuOpen = false;
         mobileMenu.classList.remove("open");
         document.body.style.overflow = "";
       }

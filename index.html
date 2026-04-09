@@ -662,6 +662,49 @@
         scrollbar-color: var(--gold) transparent;
       }
 
+      /* ── Pricing Swiper (mobile) ─────────────────────────── */
+      .pricing-swiper {
+        padding: 0 4px;
+        margin: 0 -4px;
+      }
+      .pricing-swiper .swiper {
+        overflow: visible;
+      }
+      .pricing-swiper .swiper-slide {
+        width: 85%;
+        max-width: 340px;
+        transition:
+          transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          opacity 0.35s ease;
+        opacity: 0.5;
+        transform: scale(0.88);
+      }
+      .pricing-swiper .swiper-slide-active {
+        opacity: 1;
+        transform: scale(1);
+        z-index: 2;
+      }
+      .pricing-swiper .swiper-slide .pricing-card {
+        min-height: auto;
+      }
+      .pricing-swiper .swiper-pagination {
+        position: relative;
+        bottom: auto;
+        margin-top: 24px;
+      }
+      .pricing-swiper .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        background: var(--border);
+        opacity: 1;
+        transition: all 0.3s;
+      }
+      .pricing-swiper .swiper-pagination-bullet-active {
+        background: var(--gold);
+        width: 24px;
+        border-radius: 4px;
+      }
+
       /* ── FAQ ─────────────────────────────────────────────── */
       .faq-item {
         border-bottom: 1px solid var(--border);
@@ -2365,7 +2408,550 @@
           Окончательная стоимость фиксируется в договоре.
         </p>
 
-        <div class="grid md:grid-cols-3 gap-6">
+        <!-- Swiper wrapper для мобильных -->
+        <div class="pricing-swiper md:hidden">
+          <div class="swiper">
+            <div class="swiper-wrapper">
+              <!-- Econom -->
+              <div class="swiper-slide">
+                <div class="pricing-card">
+                  <p
+                    class="text-xs tracking-widest uppercase mb-3"
+                    style="
+                      color: var(--muted);
+                      font-family: &quot;Montserrat&quot;, sans-serif;
+                      letter-spacing: 0.18em;
+                    "
+                  >
+                    Эконом
+                  </p>
+                  <div
+                    class="font-display font-semibold mb-1"
+                    style="color: var(--ink); font-size: 2.5rem"
+                  >
+                    от 4 500 ₽
+                  </div>
+                  <p class="text-sm mb-1" style="color: var(--muted)">за м²</p>
+                  <p class="text-xs mb-6" style="color: var(--muted)">
+                    Срок: 30–45 дней · 50–80 м²
+                  </p>
+                  <div
+                    class="h-px mb-6"
+                    style="background: var(--border)"
+                  ></div>
+                  <div class="services-list flex-1 pr-1 mb-6">
+                    <ul class="space-y-2.5">
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Демонтаж и вывоз мусора
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Выравнивание стен и потолков
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Укладка плитки
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Поклейка обоев / покраска
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Укладка ламината / линолеума
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Установка дверей и плинтусов
+                      </li>
+                    </ul>
+                  </div>
+                  <a
+                    href="#"
+                    class="text-xs underline mb-4 block"
+                    style="color: var(--gold)"
+                    >Пример сметы →</a
+                  >
+                  <button
+                    onclick="
+                      document
+                        .getElementById('contact')
+                        .scrollIntoView({ behavior: 'smooth' })
+                    "
+                    class="btn-primary w-full justify-center"
+                  >
+                    Вызвать замерщика
+                  </button>
+                </div>
+              </div>
+
+              <!-- Standard (featured) -->
+              <div class="swiper-slide">
+                <div class="pricing-card featured">
+                  <div class="flex items-center justify-between mb-3">
+                    <p
+                      class="text-xs tracking-widest uppercase"
+                      style="
+                        font-family: &quot;Montserrat&quot;, sans-serif;
+                        letter-spacing: 0.18em;
+                        color: rgba(255, 255, 255, 0.7);
+                      "
+                    >
+                      Стандарт
+                    </p>
+                    <span
+                      class="text-xs px-3 py-1 rounded-full font-medium"
+                      style="
+                        background: rgba(255, 255, 255, 0.2);
+                        color: #fff;
+                        font-family: &quot;Montserrat&quot;, sans-serif;
+                      "
+                      >Популярный</span
+                    >
+                  </div>
+                  <div
+                    class="font-display font-semibold mb-1 text-white"
+                    style="font-size: 2.5rem"
+                  >
+                    от 7 500 ₽
+                  </div>
+                  <p
+                    class="text-sm mb-1"
+                    style="color: rgba(255, 255, 255, 0.7)"
+                  >
+                    за м²
+                  </p>
+                  <p
+                    class="text-xs mb-6"
+                    style="color: rgba(255, 255, 255, 0.6)"
+                  >
+                    Срок: 45–60 дней · до 120 м²
+                  </p>
+                  <div
+                    class="h-px mb-6"
+                    style="background: rgba(255, 255, 255, 0.2)"
+                  ></div>
+                  <div class="services-list flex-1 pr-1 mb-6">
+                    <ul class="space-y-2.5">
+                      <li class="flex items-start gap-2 text-sm text-white/80">
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Всё из тарифа «Эконом»
+                      </li>
+                      <li class="flex items-start gap-2 text-sm text-white/80">
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Дизайн-проект 2D/3D
+                      </li>
+                      <li class="flex items-start gap-2 text-sm text-white/80">
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Натяжные потолки
+                      </li>
+                      <li class="flex items-start gap-2 text-sm text-white/80">
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Электрика под ключ
+                      </li>
+                      <li class="flex items-start gap-2 text-sm text-white/80">
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Сантехника под ключ
+                      </li>
+                      <li class="flex items-start gap-2 text-sm text-white/80">
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Паркет / керамогранит
+                      </li>
+                      <li class="flex items-start gap-2 text-sm text-white/80">
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Финальная уборка
+                      </li>
+                    </ul>
+                  </div>
+                  <a
+                    href="#"
+                    class="text-xs underline mb-4 block"
+                    style="color: rgba(255, 255, 255, 0.7)"
+                    >Пример сметы →</a
+                  >
+                  <button
+                    onclick="
+                      document
+                        .getElementById('contact')
+                        .scrollIntoView({ behavior: 'smooth' })
+                    "
+                    class="w-full justify-center inline-flex items-center gap-2 py-4 rounded-xl font-medium text-sm tracking-wide uppercase transition-all"
+                    style="
+                      background: rgba(255, 255, 255, 0.2);
+                      color: #fff;
+                      border: 1px solid rgba(255, 255, 255, 0.35);
+                      font-family: &quot;Montserrat&quot;, sans-serif;
+                      letter-spacing: 0.06em;
+                      cursor: pointer;
+                    "
+                    onmouseover="
+                      this.style.background = 'rgba(255,255,255,0.3)'
+                    "
+                    onmouseout="this.style.background = 'rgba(255,255,255,0.2)'"
+                  >
+                    Вызвать замерщика
+                  </button>
+                </div>
+              </div>
+
+              <!-- Premium -->
+              <div class="swiper-slide">
+                <div class="pricing-card">
+                  <p
+                    class="text-xs tracking-widest uppercase mb-3"
+                    style="
+                      color: var(--muted);
+                      font-family: &quot;Montserrat&quot;, sans-serif;
+                      letter-spacing: 0.18em;
+                    "
+                  >
+                    Премиум
+                  </p>
+                  <div
+                    class="font-display font-semibold mb-1"
+                    style="color: var(--ink); font-size: 2.5rem"
+                  >
+                    от 14 000 ₽
+                  </div>
+                  <p class="text-sm mb-1" style="color: var(--muted)">за м²</p>
+                  <p class="text-xs mb-6" style="color: var(--muted)">
+                    Срок: 60–90 дней · от 80 м²
+                  </p>
+                  <div
+                    class="h-px mb-6"
+                    style="background: var(--border)"
+                  ></div>
+                  <div class="services-list flex-1 pr-1 mb-6">
+                    <ul class="space-y-2.5">
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Всё из тарифа «Стандарт»
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Авторский надзор дизайнера
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Умный дом (базовый)
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Встроенная мебель на заказ
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        Декор и меблировка
+                      </li>
+                      <li
+                        class="flex items-start gap-2 text-sm"
+                        style="color: var(--muted)"
+                      >
+                        <svg
+                          class="w-4 h-4 mt-0.5 flex-shrink-0"
+                          style="color: var(--gold)"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        VIP-фотосессия готового объекта
+                      </li>
+                    </ul>
+                  </div>
+                  <a
+                    href="#"
+                    class="text-xs underline mb-4 block"
+                    style="color: var(--gold)"
+                    >Пример сметы →</a
+                  >
+                  <button
+                    onclick="
+                      document
+                        .getElementById('contact')
+                        .scrollIntoView({ behavior: 'smooth' })
+                    "
+                    class="btn-primary w-full justify-center"
+                  >
+                    Вызвать замерщика
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Pagination -->
+            <div class="swiper-pagination mt-6"></div>
+          </div>
+        </div>
+
+        <!-- Grid для десктопа (md и выше) -->
+        <div class="hidden md:grid md:grid-cols-3 gap-6">
           <!-- Econom -->
           <div class="pricing-card reveal">
             <p
@@ -3786,6 +4372,41 @@
           clickable: true,
           dynamicBullets: true,
         },
+      });
+
+      /* ─── Pricing Swiper (mobile only) ──────────────── */
+      let pricingSwiperInstance = null;
+
+      function initPricingSwiper() {
+        if (window.innerWidth < 768 && !pricingSwiperInstance) {
+          pricingSwiperInstance = new Swiper(".pricing-swiper .swiper", {
+            loop: true,
+            speed: 600,
+            slidesPerView: "auto",
+            centeredSlides: true,
+            spaceBetween: 16,
+            initialSlide: 1, // Standard (featured) active by default
+            pagination: {
+              el: ".pricing-swiper .swiper-pagination",
+              clickable: true,
+            },
+            grabCursor: true,
+            slideToClickedSlide: true,
+          });
+        } else if (window.innerWidth >= 768 && pricingSwiperInstance) {
+          pricingSwiperInstance.destroy(true, true);
+          pricingSwiperInstance = null;
+        }
+      }
+
+      // Init on load
+      initPricingSwiper();
+
+      // Re-init on resize
+      let pricingResizeTimer;
+      window.addEventListener("resize", () => {
+        clearTimeout(pricingResizeTimer);
+        pricingResizeTimer = setTimeout(initPricingSwiper, 150);
       });
 
       /* ─── GSAP ScrollTrigger animations ─────────────── */
